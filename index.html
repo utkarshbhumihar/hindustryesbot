@@ -1,0 +1,868 @@
+<!-- Created by utkarsh rai -->
+
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="theme-color" content="#075E54">
+
+<title>Chatbot</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+*{
+
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
+
+}
+
+body {
+
+font-family:sans-serif;
+
+font-size:16px;
+
+--primary:#075E54;
+
+}
+
+img{
+
+width:100%;
+
+}
+
+.container {
+
+position:relative;
+
+width:100%;
+
+max-width:100%;
+
+margin:auto;
+
+}
+
+.nav {
+
+position:sticky;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:56px;
+
+background:var(--primary);
+
+box-shadow:0 0px 3px 2px rgba(0,0,0,0.2);
+
+padding:0 10px;
+
+display:flex;
+
+align-items: center;
+
+z-index:9;
+
+}
+
+.arrow{
+
+ display:inline-block;
+
+ color:#fff;
+
+ font-size:24px;
+
+ width:20px;
+
+ cursor:pointer;
+
+}
+
+.nav .profile {
+
+ height:40px;
+
+ width:40px;
+
+ border-radius:50%;
+
+ overflow:hidden;
+
+ margin-left:10px;
+
+ cursor:pointer;
+
+}
+
+.profile:hover {
+
+}
+
+.nav .name {
+
+margin-left:10px;
+
+cursor:pointer;
+
+}
+
+.name p{
+
+ color:#fff;
+
+ line-height:1.1em;
+
+}
+
+.name p > span{
+
+ display:inline-block;
+
+ height:10px;
+
+ width:10px;
+
+ border-radius:50%;
+
+ background:#00ff00;
+
+ margin-right:5px;
+
+}
+
+.tools {
+
+ flex:1;
+
+ text-align:right;
+
+}
+
+.tools a{
+
+display:inline-block;
+
+color:#fff;
+
+font-size:25px;
+
+padding:5px;
+
+margin:0 5px;
+
+}
+
+.chat-wrapper {
+
+ position:fixed;
+
+ width:100%;
+
+ height:98vh;
+
+ background:linear-gradient(177deg, rgba(191, 191, 191, 0.03) 0%, rgba(191, 191, 191, 0.03) 12.5%,rgba(92, 92, 92, 0.03) 12.5%, rgba(92, 92, 92, 0.03) 25%,rgba(19, 19, 19, 0.03) 25%, rgba(19, 19, 19, 0.03) 37.5%,rgba(89, 89, 89, 0.03) 37.5%, rgba(89, 89, 89, 0.03) 50%,rgba(69, 69, 69, 0.03) 50%, rgba(69, 69, 69, 0.03) 62.5%,rgba(93, 93, 93, 0.03) 62.5%, rgba(93, 93, 93, 0.03) 75%,rgba(209, 209, 209, 0.03) 75%, rgba(209, 209, 209, 0.03) 87.5%,rgba(229, 229, 229, 0.03) 87.5%, rgba(229, 229, 229, 0.03) 100%),linear-gradient(151deg, rgba(121, 121, 121, 0.02) 0%, rgba(121, 121, 121, 0.02) 25%,rgba(230, 230, 230, 0.02) 25%, rgba(230, 230, 230, 0.02) 50%,rgba(31, 31, 31, 0.02) 50%, rgba(31, 31, 31, 0.02) 75%,rgba(166, 166, 166, 0.02) 75%, rgba(166, 166, 166, 0.02) 100%),linear-gradient(129deg, rgba(132, 132, 132, 0.01) 0%, rgba(132, 132, 132, 0.01) 25%,rgba(115, 115, 115, 0.01) 25%, rgba(115, 115, 115, 0.01) 50%,rgba(145, 145, 145, 0.01) 50%, rgba(145, 145, 145, 0.01) 75%,rgba(250, 250, 250, 0.01) 75%, rgba(250, 250, 250, 0.01) 100%),linear-gradient(112deg, rgba(121, 121, 121, 0.03) 0%, rgba(121, 121, 121, 0.03) 14.286%,rgba(124, 124, 124, 0.03) 14.286%, rgba(124, 124, 124, 0.03) 28.572%,rgba(188, 188, 188, 0.03) 28.572%, rgba(188, 188, 188, 0.03) 42.858%,rgba(23, 23, 23, 0.03) 42.858%, rgba(23, 23, 23, 0.03) 57.144%,rgba(56, 56, 56, 0.03) 57.144%, rgba(56, 56, 56, 0.03) 71.42999999999999%,rgba(141, 141, 141, 0.03) 71.43%, rgba(141, 141, 141, 0.03) 85.71600000000001%,rgba(170, 170, 170, 0.03) 85.716%, rgba(170, 170, 170, 0.03) 100.002%),linear-gradient(122deg, rgba(156, 156, 156, 0.02) 0%, rgba(156, 156, 156, 0.02) 25%,rgba(146, 146, 146, 0.02) 25%, rgba(146, 146, 146, 0.02) 50%,rgba(118, 118, 118, 0.02) 50%, rgba(118, 118, 118, 0.02) 75%,rgba(81, 81, 81, 0.02) 75%, rgba(81, 81, 81, 0.02) 100%),linear-gradient(221deg, rgba(223, 223, 223, 0.02) 0%, rgba(223, 223, 223, 0.02) 12.5%,rgba(163, 163, 163, 0.02) 12.5%, rgba(163, 163, 163, 0.02) 25%,rgba(250, 250, 250, 0.02) 25%, rgba(250, 250, 250, 0.02) 37.5%,rgba(32, 32, 32, 0.02) 37.5%, rgba(32, 32, 32, 0.02) 50%,rgba(78, 78, 78, 0.02) 50%, rgba(78, 78, 78, 0.02) 62.5%,rgba(8, 8, 8, 0.02) 62.5%, rgba(8, 8, 8, 0.02) 75%,rgba(235, 235, 235, 0.02) 75%, rgba(235, 235, 235, 0.02) 87.5%,rgba(100, 100, 100, 0.02) 87.5%, rgba(100, 100, 100, 0.02) 100%),linear-gradient(103deg, rgba(153, 153, 153, 0.03) 0%, rgba(153, 153, 153, 0.03) 12.5%,rgba(190, 190, 190, 0.03) 12.5%, rgba(190, 190, 190, 0.03) 25%,rgba(234, 234, 234, 0.03) 25%, rgba(234, 234, 234, 0.03) 37.5%,rgba(149, 149, 149, 0.03) 37.5%, rgba(149, 149, 149, 0.03) 50%,rgba(167, 167, 167, 0.03) 50%, rgba(167, 167, 167, 0.03) 62.5%,rgba(106, 106, 106, 0.03) 62.5%, rgba(106, 106, 106, 0.03) 75%,rgba(55, 55, 55, 0.03) 75%, rgba(55, 55, 55, 0.03) 87.5%,rgba(106, 106, 106, 0.03) 87.5%, rgba(106, 106, 106, 0.03) 100%),linear-gradient(272deg, rgba(211, 211, 211, 0.03) 0%, rgba(211, 211, 211, 0.03) 16.667%,rgba(14, 14, 14, 0.03) 16.667%, rgba(14, 14, 14, 0.03) 33.334%,rgba(132, 132, 132, 0.03) 33.334%, rgba(132, 132, 132, 0.03) 50.001000000000005%,rgba(60, 60, 60, 0.03) 50.001%, rgba(60, 60, 60, 0.03) 66.668%,rgba(22, 22, 22, 0.03) 66.668%, rgba(22, 22, 22, 0.03) 83.33500000000001%,rgba(230, 230, 230, 0.03) 83.335%, rgba(230, 230, 230, 0.03) 100.002%),linear-gradient(343deg, rgba(209, 209, 209, 0.03) 0%, rgba(209, 209, 209, 0.03) 12.5%,rgba(6, 6, 6, 0.03) 12.5%, rgba(6, 6, 6, 0.03) 25%,rgba(27, 27, 27, 0.03) 25%, rgba(27, 27, 27, 0.03) 37.5%,rgba(78, 78, 78, 0.03) 37.5%, rgba(78, 78, 78, 0.03) 50%,rgba(137, 137, 137, 0.03) 50%, rgba(137, 137, 137, 0.03) 62.5%,rgba(158, 158, 158, 0.03) 62.5%, rgba(158, 158, 158, 0.03) 75%,rgba(100, 100, 100, 0.03) 75%, rgba(100, 100, 100, 0.03) 87.5%,rgba(97, 97, 97, 0.03) 87.5%, rgba(97, 97, 97, 0.03) 100%),linear-gradient(90deg, hsl(151,0%,88%),hsl(151,0%,88%));
+
+}
+
+.chat-list {
+
+ position:absolute;
+
+ width:100%;
+
+ height:100%;
+
+ padding:0 1em;
+
+ list-style:none;
+
+ overflow:scroll;
+
+}
+
+.chat-list li{
+
+ width:200px;
+
+ margin-top:20px;
+
+ margin-bottom:20px;
+
+ cursor:pointer;
+
+}
+
+.chat-list li:last-child {
+
+ margin-bottom:200px;
+
+ 
+
+}
+
+.chat-list .r p{
+
+ display:inline-block;
+
+ background:#fff;
+
+ padding:6px 10px;
+
+ border-radius:4px;
+
+ text-transform:capitalize;
+
+}
+
+.chat-list .s{
+
+display:flex;
+
+justify-content:flex-end;
+
+margin-left:auto;
+
+}
+
+.chat-list .s p{
+
+display:inline-block;
+
+background:#E1ffc7;
+
+padding:6px 10px;
+
+border-radius:4px;
+
+}
+
+.chat-list li p > span {
+
+ color:#777;
+
+ font-size:10px;
+
+ font-weight:400;
+
+ vertical-align:bottom;
+
+ padding-left:3px;
+
+}
+
+.input {
+
+ position:fixed;
+
+ bottom:0;
+
+ width:100%;
+
+ background:rgba(0,0,0,0.2);
+
+ display:flex;
+
+ padding:5px 8px;
+
+}
+
+.msg {
+
+ flex:1;
+
+ margin-right:5px;
+
+ border:none;
+
+ outline:none;
+
+ border-radius:40px;
+
+ padding:0 20px;
+
+ caret-color:var(--primary);
+
+ font-size:18px;
+
+}
+
+.send-btn{
+
+ display:inline-block;
+
+ height:45px;
+
+ width:45px;
+
+ border-radius:50%;
+
+ border:none;
+
+ outline:none;
+
+ display:flex;
+
+ justify-content: center;
+
+ align-items: center;
+
+ font-size:20px;
+
+ color:#fff;
+
+ background:var(--primary);
+
+ cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<section class="container">
+
+<nav class="nav">
+
+ <span class="fa fa-arrow-left arrow"></span>
+
+ <div class="profile" >
+
+  <img src="https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png">
+
+ </div>
+
+ <div class="name">
+
+ <p id="nam">Amardeep keshar...</p>
+
+ <p id="online" ><span></span>online</p>
+
+ </div>
+
+ <div class="tools" >
+
+ <a href="#" ><i class="fa fa-video-camera" ></i></a>
+
+ <a href="#" ><i class="fa fa-phone" ></i></a>
+
+ <a href="#" ><i class="fa fa-ellipsis-v" ></i></a>
+
+ </div>
+
+</nav>
+
+<!-- nav end -->
+
+<div class="chat-wrapper" >
+
+<ul class="chat-list" id="list">
+
+</ul>
+
+<div class="input">
+
+ <input type="text" placeholder="Type a message" class="msg" id="msg"/>
+
+ <button type="button" class="send-btn" id="send"><i class="fa fa-send"></i></button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- script -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+
+alert('this is a simple chat app created by utkarsh type only general que..');
+
+let input;
+
+let r = 'r';
+
+let s = 's';
+
+const name = ['Sunny Leone','PM Modi','Catrina Kaif','Ananya Pandey','Utkarsh Rai','Disha panani','Radhakrishna'];
+
+const imgs = ['https://images-indianexpress-com.cdn.ampproject.org/ii/w820/s/images.indianexpress.com/2016/12/sunny-4.jpg',
+
+              'https://qph.fs.quoracdn.net/main-qimg-cd82f16670c80a27f97b25c233e0c16b.webp',
+
+              'https://cdn2-stylecraze-com.cdn.ampproject.org/ii/w560/s/cdn2.stylecraze.com/wp-content/uploads/2013/06/3.-Just-A-Picture-Of-%E2%80%98Hair%E2%80%99-And-There.jpg',              
+
+              'https://www-jagranimages-com.cdn.ampproject.org/ii/w820/s/www.jagranimages.com/images/13_04_2019-ananya_pandey_soty2_19129193_143224242.jpg',
+
+              'https://4.bp.blogspot.com/-F4UaAmJ1fFs/Xp2_7CDw4oI/AAAAAAAAB-o/K6jH2JhjaDAy4y9d04X4SnOxoAfxj58jACK4BGAYYCw/s113/IMG_20190203_082459_066.jpg',
+
+              'https://www.filmibeat.com/imgm/500x50/2019/05/disha-patani_155834410820.jpg',
+
+              'https://i1.wp.com/imagesbabu.com/wp-content/uploads/2018/12/radha-krishna-serial-images-1-2.jpg',
+
+             ];
+
+(function(){
+
+ let i = rand(name.length);
+
+ $('#nam').text(name[i]);
+
+ $('.profile img').attr('src',imgs[i]);
+
+})();
+
+const msg = [
+
+'hello','hi','hii','how are you',
+
+'ok','yes','no','not','oh','Ohh',
+
+'what','why','how r u', // 12
+
+'what is your name','what is my name',
+
+'what are you doing','what do you do', // 16
+
+'ram', 'radhe radhe', 'i love you',
+
+'i love u','love','like','who r u','who are you', //24
+
+'deepika',"i'm a boy",'where r u ','where are you ', //28
+
+'fine','good','awesome','what happened', //32
+
+'hmm',"i'm fine",'nothing','what is this', //36
+
+'lol','nice work','thanks','bye', //40
+
+'bye bye','by','fuck','sexy','sex','hy','hyy', //47
+
+'gm','good morning','gn','good night', // 51
+
+];
+
+const reply = [
+
+ 'you say','What are you doing',
+
+ '😂😂😂🤣🤣','😘😘😍',
+
+ 'what is your GF name','why are you sad',
+
+ 'tell me something about yourself','how are you',
+
+ 'what is your Gf name','mister programmer',
+
+ 'what is your favorite language','😁😁😂',
+
+];
+
+const cus = [
+
+ 'yeah!!','Okay','not happen',
+
+ "my name is amardeep kesharwani",
+
+ "you are price / princess 🥰😇",
+
+ "chating with you 😇😇",
+
+ "studying", // 6
+
+ "you to 🥰 <br> Thank you!!",
+
+ "i'm a Chatbot 🤖 ",
+
+ "create by amardeep kesharwani", //9
+
+ "she is a very talented girl",
+
+ "okay 😅<br> I'm sorry", //11
+
+ "Home 🏘️",'welcome', //13
+
+ "same to you",
+
+ "<img src='https://images-indianexpress-com.cdn.ampproject.org/ii/w820/s/images.indianexpress.com/2016/12/sunny-4.jpg'>",
+
+];
+
+const els = [
+
+ "i Don't understand 🤔",'ok',
+
+ 'okay',"i Don't understand 🤐",
+
+ 'Chand sitare ful aur khushbu ye to sare purane h taja taja kali khili hm uske diwane h',
+
+ 'hmm','yeaa!!','achhha','😂😂',
+
+ "<img src='https://images-indianexpress-com.cdn.ampproject.org/ii/w820/s/images.indianexpress.com/2016/12/sunny-4.jpg'>",
+
+ 'Chhora tu bada sharmata h Tujhko sharam kyun aata h Kaatil teri nigaahein h Tu kaat kaleja le jaata h Tujh mein nasha h Tu bilkul afeem h Dheeme dheeme dheeme dheeme',
+
+ 'pta h tu mera diwana h, mere sath Tiktok bnana h tujhme nasha h tu bilkul afeeme dheeme dheeme dheeme dheeme',
+
+ 'char botal botka kam mera roj ka na mujhako koi roke na kisi ne roka',
+
+ 'bolo radhe radhe','i love you 😘',
+
+ 'jai ma vindhyavasini',
+
+ 'Rehn de bete rehn de Tere haath na aane waali hai Gaal gulabi nain sharabi Munh pe gaali hai Ye ladki paagal hai, pagal hai Pagal hai, paagal hai',
+
+ 'yara teri yari ko mene to khuda mana yaad kregi duniya tere mere afsana',
+
+ "i Don't understand 😑",'ok','😍😍😍',
+
+ 'dil na diya dil na liya to bolo na bolo kya kiya aake duniya me bhi aagar pyar na kiya to kya kiya',
+
+ 'dard tumara jisam me mere jahar ki tarah utar raha h',
+
+ 'sun raha h na tu ro rha hu me sun raha h na',
+
+ "<img src='https://i1.wp.com/imagesbabu.com/wp-content/uploads/2018/12/radha-krishna-serial-images-1-2.jpg'>",
+
+ "i Don't understand",'😎😉😘',
+
+ 'hehe','😃🤣😋','nooo',
+
+ 'Will you be my boyfriend',
+
+ "💆 mera sir h dukhta <br>👨‍🦰 jhandudam lga le <br>🙎 hai khana bnana <br>👨‍🦰 Swiggy se magale",
+
+ 'Chandni raat mein Gori ke saath mein Aasmaan mein Dekhunga nageene',
+
+ 'are me barsane ki chhori na kr tu mose thitori, tu kalo or me gori apno mle nhi are me badhu prit ki dori karta khel nhi',
+
+ 'tuhi aye mujhko bta de chahu me ya na apne tu dil ka bta de chahu ya na',
+
+ 'meri aawargi meri diwangi ko jara chan aaye sanam tu tham le jo daman samal jayege ye kadam',
+
+ '🥳🥳😇','ok ok','i know','i understand','😬😲🤪',
+
+ 'teta fitur jab se chad gya re ',
+
+ "<img src='https://starsunfolded.com/wp-content/uploads/2017/05/Ananya-Pandey.jpg' >",
+
+ 'bekarari me v tera hi surur aaye kyu bichrna h jaruri ye saval aaye ', 
+
+ 'hey bhagwan 🙄🙄','i love you 😍😍💕',
+
+ 'ye pyar mahobat sab dhoka h pdaii kr lo abhi mauka h 🤣🤣',
+
+ '😜😜😝😝😜','🐵🐵🐵','no',
+
+ "i Don't understand",
+
+ 'namah shivay om namah Shivay har har bole namah Shivay',
+
+];
+
+function rand(len){
+
+ let num = Math.floor(Math.random()*len);
+
+ return num;
+
+}
+
+/* jQuery function  */
+
+$(document).ready(function(){
+
+  
+
+  
+
+ $('#send').click(function(){
+
+  input = $('#msg').val();
+
+  if(input != ''){
+
+   $('#list').append('<li class="s"><p>'+input+'<span>'+getTime()+'</span></p></li>');
+
+    replys(input);
+
+ // $('#msg').val('');
+
+  }   
+
+ });
+
+ 
+
+ /* reply function */
+
+ 
+
+ function replys(input){
+
+ let txt = input.toLowerCase();
+
+ let out = '';
+
+ $('#online').html('typing...');
+
+  if(msg.includes(txt)){
+
+  
+
+    if(msg[0]==txt || msg[1]==txt || msg[2]==txt || msg[46]==txt || msg[47]==txt  ){
+
+       out = reply[rand(reply.length)];
+
+       sendmsg(msg[0]);
+
+    }else if(msg[3]==txt || msg[12]==txt ){
+
+      out = reply[rand(reply.length)];
+
+      sendmsg(msg[34]);
+
+    }else if(msg[4]==txt || msg[5]==txt){
+
+     out = cus[0];
+
+    }else if(msg[6]==txt || msg[7]==txt){
+
+    out = cus[1];
+
+    }else if(msg[8]==txt || msg[9]==txt){
+
+     out = els[rand(els.length)];
+
+     if(out.match("i Don't understand")){
+
+     out = "okay";
+
+     }
+
+    }else if(msg[10]==txt || msg[32]==txt){
+
+    out = msg[35];
+
+    }else if(msg[11]==txt ){
+
+    out = cus[2];
+
+    }else if(msg[13]==txt){
+
+    out = cus[3];
+
+    }else if(msg[14]==txt){
+
+    out = cus[4];
+
+    }else if(msg[15]==txt){
+
+    out = cus[5];
+
+    }else if(msg[16]==txt){
+
+    out = cus[6];
+
+    }else if(msg[17]==txt || msg[18]==txt){
+
+    out = msg[17];
+
+    }else if(msg[19]==txt || msg[20]==txt ||msg[21]==txt){
+
+    out = cus[7];
+
+    }else if(msg[23]==txt || msg[24]==txt){
+
+    sendmsg(cus[8]);
+
+    out = cus[9];
+
+    }else if(msg[25]==txt){
+
+    out = cus[10];
+
+    }else if(msg[26]==txt){
+
+    out = cus[11];
+
+    }else if(msg[27]==txt || msg[28]==txt ||msg[21]==txt){
+
+    out = cus[12];
+
+    }else if(msg[29]==txt || msg[30]==txt || msg[31]==txt || msg[33]== txt){
+
+    out = els[rand(els.length)];
+
+    if(out.match("i Don't understand")){
+
+    out = "okay";
+
+     }
+
+    }else if(msg[34]==txt || msg[35]==txt){
+
+    out = cus[2];
+
+    }else if(msg[36]==txt || msg[37]==txt){
+
+    out = els[rand(els.length)];
+
+    if(out.match("i Don't understand")){
+
+    out = "okay";
+
+     }
+
+    }else if(msg[38]==txt){
+
+    out = msg[39];
+
+    }else if(msg[39]==txt){
+
+    out = cus[13];
+
+    }else if(msg[40]==txt || msg[41]==txt || msg[42]==txt){
+
+    out = msg[41];
+
+    }else if(msg[43]==txt){
+
+    out = cus[14];
+
+    }else if(msg[44]==txt || msg[45]==txt){
+
+    out = cus[15];
+
+    }else if(msg[48]==txt || msg[49]==txt){
+
+    out = msg[49];
+
+    }else if(msg[50]==txt || msg[51]==txt){
+
+    out = msg[51];
+
+    }
+
+    else{
+
+     out = els[rand(els.length)];
+
+     if(out.match("i Don't understand")){
+
+      out = "okay";
+
+     }
+
+    }
+
+    
+
+  }else{
+
+   out = els[rand(els.length)];
+
+  }
+
+  sendmsg(out);
+
+  $('#msg').val('');
+
+ }
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ /* send message */
+
+ 
+
+ function sendmsg(msg){
+
+ setTimeout(function(){
+
+ $('#list').append('<li class="r"><p>'+msg+'<span>'+getTime()+'</span></p></li>');
+
+ },1000);
+
+ setTimeout(function(){
+
+ $('#online').html('<span></span>online');
+
+ },1500);
+
+ }
+
+});
+
+/* time function*/
+
+function getTime(){
+
+let date = new Date();
+
+let minute = date.getMinutes();
+
+let hours = date.getHours();
+
+let aa,hour;
+
+if(hours <= 12){
+
+ aa = 'AM';
+
+ hour = hours;
+
+}else{
+
+ aa = 'PM';
+
+ hour = hours - 12;
+
+}
+
+let out = hour+':'+minute+' '+aa; 
+
+return out;
+
+}
+
+</script>
+
+</body>
+
+</html>
+
